@@ -1,0 +1,30 @@
+
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-dockerfile
+{
+	"name": "Performance Test",
+	"build": {
+		"context": "../workspace",
+		"dockerfile": "Dockerfile"
+	},
+	"remoteEnv": {
+		"JUPYTER_PASSWORD": "${localEnv:JUPYTER_PASSWORD}"
+	},
+	// Uncomment the next line to run commands after the container is created.
+	"postCreateCommand": "uv sync --inexact",
+	"postStartCommand": "nohup bash -c 'cd workspace && /usr/local/bin/start.sh /usr/local/bin/start-notebook.sh --PasswordIdentityProvider.hashed_password=$JUPYTER_PASSWORD &>/home/jovyan/lab.log &'",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python", 
+				"ms-toolsai.jupyter",
+				"ms-python.isort",
+				"ms-python.black-formatter",
+				"bierner.markdown-preview-github-styles"
+			],
+	    	"settings": {
+	        	"remote.autoForwardPorts": false
+	      	}			
+		}
+	}
+}
