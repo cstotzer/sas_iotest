@@ -4,7 +4,7 @@
 {
 	"name": "Performance Test",
 	"build": {
-		"context": "../workspace",
+		"context": "..",
 		"dockerfile": "Dockerfile"
 	},
 	"remoteEnv": {
@@ -12,7 +12,7 @@
 	},
 	// Uncomment the next line to run commands after the container is created.
 	"postCreateCommand": "uv sync --inexact",
-	"postStartCommand": "nohup bash -c 'cd workspace && /usr/local/bin/start.sh /usr/local/bin/start-notebook.sh --PasswordIdentityProvider.hashed_password=$JUPYTER_PASSWORD &>/home/jovyan/lab.log &'",
+	"postStartCommand": "nohup bash -c '/usr/local/bin/start.sh /usr/local/bin/start-notebook.sh --PasswordIdentityProvider.hashed_password=$JUPYTER_PASSWORD &>/home/jovyan/lab.log &'",
 	"customizations": {
 		"vscode": {
 			"extensions": [
