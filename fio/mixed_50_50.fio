@@ -1,0 +1,4 @@
+[mixed_50_50]
+rw=randrw
+rwmixread=50
+bs=256k
