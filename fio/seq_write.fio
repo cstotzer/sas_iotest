@@ -1,0 +1,3 @@
+[seq_write]
+rw=write
+bs=256K
