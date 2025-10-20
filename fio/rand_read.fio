@@ -1,0 +1,3 @@
+[rand_read]
+rw=randread
+bs=4k
