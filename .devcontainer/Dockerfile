@@ -5,6 +5,7 @@ USER root
 # Install required software
 RUN apt-get update && apt-get install --no-install-recommends -y \
     pipx \
+    fio \
     git-lfs && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
