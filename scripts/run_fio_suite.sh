@@ -14,13 +14,18 @@ mkdir -p "${RESULT_DIR}"
 
 declare -A TARGETS=()
 [[ -n "${SAN_PROJECT_DIR:-}" ]] && TARGETS[san_project]="$SAN_PROJECT_DIR"
-[[ -n "${NAS_PROJECT_DIR:-}" ]] && TARGETS[nas_project]="$NAS_PROJECT_DIR"
+
+# NAS optional
+if [[ -n "${NAS_PROJECT_DIR:-}" ]]; then
+  TARGETS[nas_project]="$NAS_PROJECT_DIR"
+fi
+
 # SASWORK optional
 if [[ -n "${SASWORK_DIR:-}" ]]; then
   TARGETS[saswork]="$SASWORK_DIR"
 fi
 
-TESTS=("seq_read" "seq_write" "rand_read" "rand_write" "mixed_70_30")
+TESTS=("seq_read" "seq_write" "rand_read" "rand_write" "mixed_50_50")
 
 # Optional: CPU-Governor setzen
 maybe_set_governor() {
@@ -43,6 +48,8 @@ command -v fio >/dev/null || { echo "fio nicht gefunden"; exit 2; }
 
 maybe_set_governor
 
+env | sort
+
 # Läufe
 for target in "${!TARGETS[@]}"; do
   dir="${TARGETS[$target]}"
@@ -58,15 +65,16 @@ for target in "${!TARGETS[@]}"; do
 
       drop_caches
 
-      fio fio/global.fio \
-        fio/${test}.fio \
+      SIZE_GB=${SIZE_GB} \
+      NUMJOBS=${NUMJOBS} \
+      IODEPTH=${IODEPTH} \
+      NUMJOBS=${NUMJOBS} \
+      RUNTIME=${RUNTIME} \
+      RAMP_TIME=${RAMP_TIME} \
+      fio ${IOTEST_DIR}/fio/global.fio \
+        ${IOTEST_DIR}/fio/${test}.fio \
         --filename="${dir}/fio_${test}.dat" \
         --directory="${dir}" \
-        --size="${SIZE_GB}G" \
-        --runtime="${RUNTIME}" \
-        --ramp_time="${RAMP_TIME}" \
-        --numjobs="${NUMJOBS}" \
-        --iodepth="${IODEPTH}" \
         --output="${out}" \
         --output-format=json
       # Testfile danach nicht löschen, damit verschiedene rw-Pattern identische Datenblöcke nutzen können.

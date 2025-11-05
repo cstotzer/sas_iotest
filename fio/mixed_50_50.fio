@@ -2,3 +2,8 @@
 rw=randrw
 rwmixread=50
 bs=256k
+size=${SIZE_GB}
+numjobs=${NUMJOBS}
+iodepth=${IODEPTH}
+runtime=${RUNTIME}
+ramp_time=${RAMP_TIME}

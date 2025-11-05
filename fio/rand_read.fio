@@ -1,3 +1,8 @@
 [rand_read]
 rw=randread
 bs=4k
+size=${SIZE_GB}
+numjobs=${NUMJOBS}
+iodepth=${IODEPTH}
+runtime=${RUNTIME}
+ramp_time=${RAMP_TIME}
