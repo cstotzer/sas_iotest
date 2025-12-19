@@ -207,3 +207,8 @@ marimo/_lsp/
 __marimo__/
 
 nohup.out
+
+# Fio output files
+results
+fio_summary.csv
+work
